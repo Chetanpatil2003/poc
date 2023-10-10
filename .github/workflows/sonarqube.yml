@@ -1,3 +1,4 @@
+
 name: Node.js Build and SonarQube Analysis
 
 on:
@@ -24,17 +25,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Cache SonarQube packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
       - name: Run SonarQube Analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_HOST_URL: http://localhost:9000/
         run: |
           npm run build # Replace with the command to build your Node.js project
           sonar-scanner # Make sure you have SonarScanner for Node.js installed
